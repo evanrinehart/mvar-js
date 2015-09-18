@@ -58,19 +58,38 @@ put and take callbacks.
 
 ## API
 
-- newMVar(x): a new mvar holding the value x.
-- newEmptyMVar(): a new empty mvar.
-- mv.take(cb): Take the value and provide to cb when possible.
-- mv.put(x, cb): Put x then run cb when possible.
-- mv.read(cb): Run the cb on the value when possible without taking it.
-- mv.borrow(cb): Take the value, run the cb on it, then put it back.
+### newMVar(x)
+A new mvar holding the value x.
+
+### newEmptyMVar()
+A new empty mvar.
+
+### mv.take(cb)
+Take the value and provide it to the 1-arg callback cb when possible.
+
+### mv.put(x, cb)
+Put x then run the 0-arg callback cb when possible. The callback is optional.
+
+### mv.read(cb)
+Run the 1-arg callback cb on the value, when possible, without taking it.
+
+### mv.borrow(cb)
+Take the value, run the 1-arg callback cb on it, then put it back.
 This will put the value back even if cb causes an error.
-- mv.swap(cb): Take the value, run the cb on it, and put the return value
+
+### mv.swap(cb)
+Take the value, run the 1-arg callback cb on it, and put the return value
 back in its place. If cb causes an error the original value is put back.
-- mv.tryTake(): Try to take the value immediately. If there is a value x
-then {some: x} is returned. Otherwise you will get {none: true}.
-- mv.tryPut(x): Try to put a value right now. Returns true if the put was
-successful otherwise false.
-- mv.isEmpty(): Check the instantaneous emptiness of the MVar. In general
-you can't rely on this to do anything. However in javascript it may be
-possible to use this productively if you know what you're doing.
+
+### mv.tryTake()
+Try to take the value immediately. If there is a value x then {some: x} is
+returned. Otherwise you will get {none: true}.
+
+### mv.tryPut(x)
+Try to put the value x right now. Returns true if the put was successful
+otherwise false.
+
+### mv.isEmpty()
+Check the instantaneous emptiness of the MVar. In general you can't rely on
+this to do anything. However in Javascript it may be possible to use this
+productively if you know what you're doing.
