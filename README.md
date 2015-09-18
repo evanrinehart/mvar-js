@@ -82,8 +82,8 @@ Take the value, run the 1-arg callback cb on it, and put the return value
 back in its place. If cb causes an error the original value is put back.
 
 ### mv.tryTake()
-Try to take the value immediately. If there is a value x then {some: x} is
-returned. Otherwise you will get {none: true}.
+Try to take the value immediately. If there is a value x then `{some: x}` is
+returned. Otherwise you will get `{none: true}`.
 
 ### mv.tryPut(x)
 Try to put the value x right now. Returns true if the put was successful
