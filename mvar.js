@@ -15,7 +15,7 @@ function MVar(mv){
         var put = mv.putQueue.shift();
         mv.full = put.x;
         this._ = put.x;
-        put.cb();
+        if(put.cb) put.cb();
       }
       else{
         delete mv.full;
@@ -32,14 +32,14 @@ function MVar(mv){
         mv.readQueue.shift()(x);
       }
       if(mv.takeQueue.length > 0){
-        cb();
+        if(cb) cb();
         mv.takeQueue.shift()(x);
       }
       else{
         delete mv.empty;
         mv.full = x;
         this._ = x;
-        cb();
+        if(cb) cb();
       }
     }
     else{
@@ -66,7 +66,7 @@ function MVar(mv){
         var put = mv.putQueue.shift();
         mv.full = put.x;
         this._ = put.x;
-        put.cb();
+        if(put.cb) put.cb();
       }
       else{
         delete mv.full;
@@ -104,10 +104,10 @@ function MVar(mv){
       var y;
       try{ y = cb(x); }
       catch(e){
-        this.put(x, function(){});
+        this.put(x);
         throw e;
       }
-      this.put(y, function(){});
+      this.put(y);
     });
   }
 
@@ -115,10 +115,10 @@ function MVar(mv){
     this.take(function(x){
       try{ cb(x); }
       catch(e){
-        this.put(x, function(){});
+        this.put(x);
         throw e;
       }
-      this.put(x, function(){});
+      this.put(x);
     });
   }
 
